@@ -1,5 +1,8 @@
 package de.logicalco.java8demo.lambda;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 /**
  * 
@@ -15,6 +18,10 @@ public class FunctionalInterfacesDemo {
 		FunctionalInterfacesDemo demo = new FunctionalInterfacesDemo();
 		demo.processObject(s -> String.valueOf(s.hashCode()));
 		demo.processString(s -> String.valueOf(s.hashCode()));
+		Test test = (a, b, c) -> {int var = a + b; return String.valueOf(var) + c;};
+		System.out.println(test.test(1, 2, "!"));
+		ExecutorService pool = Executors.newSingleThreadExecutor();
+		pool.submit(() -> System.out.println("Parallel code goes here"));
 	}
 	
 	void processString(Processor<String, String> processor) {
@@ -37,4 +44,8 @@ public class FunctionalInterfacesDemo {
 		R process(T t);
 	}
 	
+	@FunctionalInterface
+	public interface Test {
+		String test(int x, int y, String z);
+	}
 }
